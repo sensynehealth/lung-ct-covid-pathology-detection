@@ -37,19 +37,14 @@ COLOR_DICT = np.array([Sky, Building, Pole, Road, Pavement,
 
 
 
-
-
-def get_data(image_path, mask_path, min_hu=200, max_hu=700, n_classes=3):
+def get_data(image_path, mask_path=None, min_hu=200, max_hu=700, n_classes=3):
 
     """
     Load the nifti data as arrays
     """
 
     im = nib.load(image_path)
-    msk = nib.load(mask_path)
-
     im_data = im.get_data()
-    msk_data = msk.get_data()
 
 
     def preprocessing(im1):
@@ -61,16 +56,18 @@ def get_data(image_path, mask_path, min_hu=200, max_hu=700, n_classes=3):
     im_data = preprocessing(im_data)
     im_data = np.expand_dims(im_data, axis=-1)
 
-    msk_data = preprocessing(msk_data)
-
-    # Use tensorflow for a one-hot encoding
-    msk_data_onehot = one_hot(msk_data, depth=4, dtype='float32')
-    msk_data_onehot = msk_data_onehot.eval(session=tf.compat.v1.Session())    
-    # msk_data = msk_data.numpy()
+    if mask_path is not None:
+        msk = nib.load(mask_path)
+        msk_data = msk.get_data()
+        msk_data = preprocessing(msk_data)
+        # Use tensorflow for a one-hot encoding
+        msk_data_onehot = one_hot(msk_data, depth=4, dtype='float32')
+        msk_data_onehot = msk_data_onehot.eval(session=tf.compat.v1.Session())    
+        # msk_data = msk_data.numpy()
+    else:
+        msk_data_onehot = None
 
     im_data = (im_data - min_hu)/(max_hu - min_hu)
-
-
 
     return im_data, msk_data_onehot
 
