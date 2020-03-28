@@ -4,4 +4,4 @@ img/
 data/
 .vscode/
 *.hdf5
-
+demo_figs/

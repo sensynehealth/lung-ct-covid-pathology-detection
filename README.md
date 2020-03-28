@@ -1,6 +1,14 @@
 
-# Docker run (gpu)
+# Step 1: Running the code
 
-docker run --rm -it -v $(pwd):/code mlruntime-tensorflow-images python3 main.py
+## Docker run (gpu)
 
-# CPU debugging via the output
+`docker run --rm -it -v $(pwd):/code mlruntime-tensorflow-images python3 main.py`
+
+## Debugging via the output (cpu)
+
+VSCode
+
+# Step 2: Processing the data
+
+- Load niftis
