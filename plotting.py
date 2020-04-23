@@ -48,11 +48,13 @@ def plot_samples_test(x, y, gt=None, num_batches=1, save_path='demo_figs', save_
 
     """
 
-    def reverse_one_hot_encoding(y1):
-        mult = np.array(range(shp[-1]))
-        mult = mult[np.newaxis, np.newaxis, :]
-        y1 = y1 * mult
-        mskplt = np.sum(y1, axis=-1)
+    def reverse_one_hot_encoding(y1, scale_factor=[1, 2, 2, 2]):
+        mskplt = np.argmax(y1, axis=-1)
+
+        # mult = np.array(range(shp[-1]))
+        # mult = mult[np.newaxis, np.newaxis, :]
+        # y1 = y1 * mult
+        # mskplt = np.sum(y1, axis=-1)
         return mskplt
 
     im_len = x.shape[0]
@@ -77,19 +79,24 @@ def plot_samples_test(x, y, gt=None, num_batches=1, save_path='demo_figs', save_
 
         implt = implt.transpose()
 
-        fig = plt.figure(figsize=(20,10))
+        fig, axs = plt.subplots(1,3, figsize=(20,10))
+        fig.suptitle('Quantification of pathology in COVID-19 CT', fontsize=16)
         fig.set_tight_layout(True)
-        plt.subplot(1, 3, 1)
-        plt.imshow(implt, cmap='gray')
-        plt.axis('off')
-        plt.subplot(1, 3, 2)
-        plt.imshow(implt, cmap='gray')
-        plt.imshow(mskplt_mask, vmax=3, vmin=0, cmap='jet', alpha=0.5)
-        plt.axis('off')
+        # plt.subplot(1, 3, 1)
+        axs[0].imshow(implt, cmap='gray')
+        axs[0].axis('off')
+        axs[0].set_title('Lung CT')
+        # plt.subplot(1, 3, 2)
+        axs[1].imshow(implt, cmap='gray')
+        axs[1].imshow(mskplt_mask, vmax=3, vmin=0, cmap='jet', alpha=0.5)
+        axs[1].axis('off')
+        axs[1].set_title('Automatic pathology detection')
+        axs[2].axis('off')
         if gt is not None:
-            plt.subplot(1, 3, 3)
-            plt.imshow(implt, cmap='gray')
-            plt.imshow(mskpltgt_mask, vmax=3, vmin=0, cmap='jet', alpha=0.5)
-            plt.axis('off')
+            # plt.subplot(1, 3, 3)
+            axs[2].imshow(implt, cmap='gray')
+            axs[2].imshow(mskpltgt_mask, vmax=3, vmin=0, cmap='jet', alpha=0.5)
+            axs[2].set_title('Ground truth')
+
 
         plt.savefig(save_path + '/' + str(cc) + save_term + '.png')

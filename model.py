@@ -8,6 +8,7 @@ from keras.layers import *
 from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler
 from keras import backend as keras
+from tensorflow.nn import weighted_cross_entropy_with_logits
 
 
 def unet(pretrained_weights = None,input_size = (512,512,1), output_channels=4):
@@ -50,13 +51,13 @@ def unet(pretrained_weights = None,input_size = (512,512,1), output_channels=4):
     conv9 = Conv2D(64, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(merge9)
     conv9 = Conv2D(64, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(conv9)
     conv9 = Conv2D(output_channels, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')(conv9)
-    conv10 = Conv2D(output_channels, 1, activation = 'sigmoid')(conv9)
+    conv10 = Conv2D(output_channels, 1, activation = 'softmax')(conv9)
 
     model = Model(input = inputs, output = conv10)
 
-    model.compile(optimizer = Adam(lr = 1e-4), loss = 'binary_crossentropy', metrics = ['accuracy'])
+    model.compile(optimizer = Adam(lr = 1e-4), loss = 'categorical_crossentropy', metrics = ['accuracy'])
     
-    #model.summary()
+    model.summary()
 
     if(pretrained_weights):
     	model.load_weights(pretrained_weights)

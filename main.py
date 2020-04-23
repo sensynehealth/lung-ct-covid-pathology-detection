@@ -1,3 +1,7 @@
+import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
+
 from model import unet, ModelCheckpoint
 import numpy as np
 from data import trainGeneratorArray, get_data
@@ -23,8 +27,10 @@ tst_im_path = 'data/covid/val_im.nii.gz'
 # Options 
 # --------------------------------------
 
-train_model = False
+train_model = True
 validation_size = 0.1
+steps_per_epoch = 100
+epochs = 200
 
 # --------------------------------------
 
@@ -42,23 +48,28 @@ Gen1 = trainGeneratorArray(2, imtr, msktr, data_gen_args, save_to_dir = None)
 model = unet()
 
 if train_model:
-    model_checkpoint = ModelCheckpoint('unet_covid.hdf5', monitor='loss',verbose=1, save_best_only=True)
-    model.fit_generator(Gen1,steps_per_epoch=100,epochs=20,callbacks=[model_checkpoint], validation_data=(imval, mskval))
+    model_checkpoint = ModelCheckpoint('unet_covid_crossval_200.hdf5', monitor='loss',verbose=1, save_best_only=True)
+    model.fit_generator(Gen1, 
+                        steps_per_epoch=steps_per_epoch, 
+                        epochs=epochs, callbacks=[model_checkpoint], 
+                        validation_data=(imval, mskval))
 else:
-    model.load_weights('unet_covid.hdf5')
+
+    model_name = 'crossval'
+    model.load_weights('unet_covid_' + model_name + '.hdf5')
 
     # Test set
 
     imtst, _ = get_data(tst_im_path)
     imtstpred = model.predict(imtst)
-    imtstpred = imtstpred > 0.2
-    plot_samples_test(imtst, imtstpred, save_term='_testset')
+    # imtstpred = imtstpred > 0.5
+    plot_samples_test(imtst, imtstpred, save_term='_testset_' + model_name)
 
     # Validation set
 
     imvalpred = model.predict(imval)
-    imvalpred = imvalpred > 0.2
-    plot_samples_test(imval, imvalpred, mskval, save_term='_valset')
+    # imvalpred = imvalpred > 0.5
+    plot_samples_test(imval, imvalpred, mskval, save_term='_valset_' + model_name)
 
 
 # testGene = testGenerator("data/membrane/test")
