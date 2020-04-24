@@ -27,7 +27,7 @@ tst_im_path = 'data/covid/val_im.nii.gz'
 # Options 
 # --------------------------------------
 
-train_model = True
+train_model = False
 validation_size = 0.1
 steps_per_epoch = 100
 epochs = 200
@@ -71,7 +71,3 @@ else:
     # imvalpred = imvalpred > 0.5
     plot_samples_test(imval, imvalpred, mskval, save_term='_valset_' + model_name)
 
-
-# testGene = testGenerator("data/membrane/test")
-# results = model.predict_generator(testGene,30,verbose=1)
-# saveResult("data/membrane/test",results)

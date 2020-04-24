@@ -1,6 +1,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 
 def plot_samples(Gen1, num_batches=1, save_path='demo_figs'):
@@ -10,6 +11,8 @@ def plot_samples(Gen1, num_batches=1, save_path='demo_figs'):
     Plot samples from a generator
 
     """
+
+    Path(save_path).mkdir(exist_ok=True)
 
     cc = 0
     for im_sample, msk_sample in Gen1:
@@ -47,6 +50,9 @@ def plot_samples_test(x, y, gt=None, num_batches=1, save_path='demo_figs', save_
     Plot all cases from an array
 
     """
+
+    Path(save_path).mkdir(exist_ok=True)
+
 
     def reverse_one_hot_encoding(y1, scale_factor=[1, 2, 2, 2]):
         mskplt = np.argmax(y1, axis=-1)
