@@ -19,7 +19,15 @@ To run the code, download the training images, training masks and test images fr
 
 and copy these files into `data/covid/` in the code directory. 
 
-# 2) Building the environment and running the code
+# 2) Trained model
+
+The trained model can be downloaded from the the Github release at:
+
+https://github.com/draysontechnologies/lung-ct-covid-pathology-detection/releases/download/v0.1/unet_covid_crossval_200.hdf5
+
+This needs to be copied into the main folder. 
+
+# 3) Building the environment and running the code
 
 ### Running the code in a virtual environment
 
@@ -45,7 +53,7 @@ To run the code
 
 The processed images from the test and validation set will appear in `demo_figs`
 
-# 3) Usage
+# 4) Usage
 
 The following simple options are available in the main script:
 
