@@ -1,5 +1,5 @@
 
-This repository provides proof of concept code for detecting pathology related to COVID-19. The figure below shows the original CT axial slice, the manually annotated ground truth and the automatic delineation of consolidation and ground glass opacity. 
+This repository provides proof of concept code for detecting pathology related to COVID-19 from a Sensyne hackathon. The figure below shows the original CT axial slice, the manually annotated ground truth and the automatic delineation of consolidation and ground glass opacity. 
 
 Please see the following blog post for more details: [ADD LINK]
 
