@@ -1,7 +1,7 @@
 
 This repository provides proof of concept code for detecting pathology related to COVID-19 from a Sensyne hackathon. The figure below shows the original CT axial slice, the manually annotated ground truth and the automatic delineation of consolidation and ground glass opacity. 
 
-Please see the following blog post for more details: [ADD LINK]
+Please see the following blog post for more details: https://medium.com/@heaven_spring_cheetah_212/a-weekend-a-virtual-hackathon-and-ml-approaches-to-automate-the-analysis-of-covid-19-lung-ct-5ad4c89fe03c
 
 ![img1](img/3_valset_crossval.png)
 
