@@ -23,7 +23,7 @@ and copy these files into `data/covid/` in the code directory.
 
 The trained model can be downloaded from the the Github release at:
 
-https://github.com/draysontechnologies/lung-ct-covid-pathology-detection/releases/download/v0.1/unet_covid_crossval_200.hdf5
+https://github.com/sensynehealth/lung-ct-covid-pathology-detection/releases/download/v0.1/unet_covid_crossval_200.hdf5
 
 This needs to be copied into the main folder. 
 
