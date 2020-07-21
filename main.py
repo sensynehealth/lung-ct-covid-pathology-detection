@@ -55,7 +55,7 @@ if train_model:
                         validation_data=(imval, mskval))
 else:
 
-    model_name = 'crossval'
+    model_name = 'crossval_200'
     model.load_weights('unet_covid_' + model_name + '.hdf5')
 
     # Test set
